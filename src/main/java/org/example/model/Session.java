@@ -1,7 +1,9 @@
 package org.example.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.sql.Timestamp;
 @Table(name = "sessions")
 @Getter
 @Setter
+@AllArgsConstructor()
+@NoArgsConstructor
 public class Session {
 
     @Id
@@ -23,6 +27,7 @@ public class Session {
 
     @Column(name = "expires_at")
     private Timestamp expiresAt;
+
 
 
 }

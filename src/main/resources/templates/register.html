@@ -26,11 +26,18 @@
   </div>
 </nav>
 
+
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
+      <div th:if="${errors != null}" class="alert alert-danger">
+        <ul>
+          <li th:each="err : ${errors}" th:text="${err}"></li>
+        </ul>
+      </div>
       <h2>Register</h2>
-      <form action="/register" method="post">
+      <form th:action="${applicationContext + '/register'}" method="post">
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>

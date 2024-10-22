@@ -9,4 +9,7 @@ public interface UserRepository {
     Optional<User> findByNamePassword (String name, String password);
 
 
+    Optional<User> findByName(String username);
+
+    User save(User user);
 }

@@ -28,7 +28,9 @@
 </nav>
 
 <div class="container mt-5">
-    <h1>Welcome to Weather Tracker</h1>
+    <h1>
+        Welcome to Weather Tracker<span th:if="${username != null}">, [[${username}]]</span>!
+    </h1>
 
     <div th:if="${authentication == true}">
         <h2>Your Content</h2>

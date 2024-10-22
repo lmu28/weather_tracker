@@ -11,6 +11,23 @@ public class UserRepositoryHibernate implements UserRepository {
 
 
     @Override
+    public Optional<User> findByName(String username) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        User user = null;
+        try {
+            entityManager.getTransaction().begin();
+            user = (User) entityManager.createQuery("select u from User u where u.name = :name")
+                    .setParameter("name", username).getSingleResult();
+            entityManager.getTransaction().commit();
+        }catch (RuntimeException e){
+            entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
+        }
+        return Optional.ofNullable(user);
+    }
+
+    @Override
     public Optional<User> findByNamePassword(String name, String password) {
         EntityManager entityManager = HibernateUtil.getEntityManager();
         User user = null;
@@ -34,6 +51,21 @@ public class UserRepositoryHibernate implements UserRepository {
         return Optional.ofNullable(user);
     }
 
+    @Override
+    public User save(User transientUser) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(transientUser);
+            entityManager.getTransaction().commit();
+        }catch (RuntimeException e){
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            entityManager.close();
+        }
+        return transientUser;
 
 
+    }
 }

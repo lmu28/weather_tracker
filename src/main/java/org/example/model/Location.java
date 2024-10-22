@@ -2,6 +2,7 @@ package org.example.model;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "locations")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Location {
 
     @Id
@@ -25,4 +27,9 @@ public class Location {
     private double  longitude;
 
 
+    public Location(String name, double latitude, double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }
