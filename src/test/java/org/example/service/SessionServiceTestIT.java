@@ -113,6 +113,8 @@ class SessionServiceTestIT {
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
+            beforeAll();
+
         }
     }
 
@@ -137,6 +139,7 @@ class SessionServiceTestIT {
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
+            beforeAll();
         }
     }
 
@@ -160,6 +163,7 @@ class SessionServiceTestIT {
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
+            beforeAll();
         }
     }
 

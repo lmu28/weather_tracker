@@ -1,6 +1,7 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.model.Location;
 import org.example.model.User;
 import org.example.repository.UserRepository;
 import org.example.repository.UserRepositoryHibernate;
@@ -23,5 +24,9 @@ public class UserService {
         String hashPassword = cryptUtil.hashPassword(user.getPassword());
         user.setPassword(hashPassword);
         return userRepository.save(user);
+    }
+
+    public void removeLocationFromUser(User user, Location location){
+        userRepository.removeLocationFromUser(user,location);
     }
 }

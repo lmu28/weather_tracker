@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.model.Location;
 import org.example.model.User;
 import org.example.util.HibernateUtil;
 
@@ -66,6 +67,24 @@ public class UserRepositoryHibernate implements UserRepository {
         }
         return transientUser;
 
+
+    }
+
+
+    @Override
+    public void removeLocationFromUser(User user, Location location) {
+
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            user = entityManager.find(User.class, user.getId());
+            user.getLocations().remove(location);
+            entityManager.getTransaction().commit();
+        }catch (RuntimeException e){
+            entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
+        }
 
     }
 }

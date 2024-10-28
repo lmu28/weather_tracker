@@ -5,9 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SortNatural;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "users")
@@ -28,13 +32,13 @@ public class User {
     private String password;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_locations",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "location_id")
     )
-
-    private List<Location> locations;
+    @SortNatural
+    private Set<Location> locations;
 
 }

@@ -16,7 +16,7 @@
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/> <!-- Авто создание и удаление схемы для тестов -->
+<!--            <property name="hibernate.hbm2ddl.auto" value="create-drop"/> &lt;!&ndash; Авто создание и удаление схемы для тестов &ndash;&gt;-->
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
