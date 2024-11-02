@@ -16,4 +16,6 @@ public interface UserRepository {
 
 
      void removeLocationFromUser(User user, Location location);
+
+    User addLocationToUser(User user, Location location);
 }

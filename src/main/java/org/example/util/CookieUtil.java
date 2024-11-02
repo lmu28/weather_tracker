@@ -1,13 +1,10 @@
-package org.example.service;
+package org.example.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.model.Session;
 
-import java.sql.Timestamp;
-
-public class CookieService {
+public class CookieUtil {
     public Cookie getCookie(String name, HttpServletRequest httpRequest) {
         Cookie cookie  = null;
         for (Cookie c:  httpRequest.getCookies()){

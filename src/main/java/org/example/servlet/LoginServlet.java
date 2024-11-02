@@ -7,10 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.model.Session;
-import org.example.model.User;
 import org.example.repository.SessionRepositoryHibernate;
 import org.example.repository.UserRepositoryHibernate;
-import org.example.service.CookieService;
+import org.example.util.CookieUtil;
 import org.example.service.SessionService;
 import org.example.service.UserCredentialsValidator;
 import org.example.service.UserService;
@@ -29,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 
     private final SessionService sessionService = new SessionService(new SessionRepositoryHibernate());
 
-    private final CookieService cookieService = new CookieService();
+    private final CookieUtil cookieUtil = new CookieUtil();
     private final UserCredentialsValidator validator = new UserCredentialsValidator(
             new CryptUtil(),
             new UserService(new UserRepositoryHibernate(), new CryptUtil())
@@ -60,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
         Session session = sessionService.save(userDTO.getUser());
-        cookieService.setCookie("SESSION_ID", session.getId(),resp);
+        cookieUtil.setCookie("SESSION_ID", session.getId(),resp);
         resp.sendRedirect(req.getContextPath() + "/");
     }
 }

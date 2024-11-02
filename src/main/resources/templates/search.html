@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Weather Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="${applicationContext +'/'}">Weather Tracker</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li th:if="${authentication == false}" class="nav-item">
+                <!--                <a class="nav-link" href="/login">Login</a>-->
+                <a class="nav-link" th:href="${applicationContext +'/login'}">Login</a>
+            </li>
+            <li th:if="${authentication == false}" class="nav-item">
+                <a class="nav-link" th:href="${applicationContext +'/register'}">Register</a>
+            </li>
+            <li th:if="${authentication == true}" class="nav-item">
+                <a class="nav-link" th:href="${applicationContext +'/logout'}">Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+    <h1>Search Locations</h1>
+
+    <form th:action="${applicationContext} + '/location'" method="GET" class="d-flex mb-3">
+        <input type="text" class="form-control" name="locationName" placeholder="Search locations..."
+               aria-label="Search"
+               style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+        <button type="submit" class="btn btn-outline-primary"
+                style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Search
+        </button>
+    </form>
+
+
+    <div th:if="${locations != null}">
+
+        <ul class="list-group mt-3">
+            <li th:each="location : ${locations}" class="list-group-item d-flex justify-content-between align-items-center">
+                <span th:text="${location.name}">Location Name</span>
+
+                <form th:action="${applicationContext} + '/location'" method="post" style="display: inline;">
+                    <input type="hidden" name="_method" value="PUT"/>
+                    <input type="hidden" name="locationName" th:value="${location.name}"/>
+                    <button type="submit" class="btn btn-success btn-sm">Add</button>
+                </form>
+            </li>
+        </ul>
+
+
+    </div>
+
+
+    <!-- Секция, если результаты не найдены -->
+    <div th:if="${locations == null}">
+        <p>Type in the search box and submit to see results.</p>
+    </div>
+</div>
+</body>
+</html>

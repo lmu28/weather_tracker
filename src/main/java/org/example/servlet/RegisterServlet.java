@@ -1,7 +1,5 @@
 package org.example.servlet;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +10,7 @@ import org.example.model.Session;
 import org.example.model.User;
 import org.example.repository.SessionRepositoryHibernate;
 import org.example.repository.UserRepositoryHibernate;
-import org.example.service.CookieService;
+import org.example.util.CookieUtil;
 import org.example.service.SessionService;
 import org.example.service.UserCredentialsValidator;
 import org.example.service.UserService;
@@ -28,7 +26,7 @@ import java.util.List;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
-    private final CookieService cookieService = new CookieService();
+    private final CookieUtil cookieUtil = new CookieUtil();
     private final UserService userService = new UserService(new UserRepositoryHibernate(), new CryptUtil());
 
     private final SessionService sessionService = new SessionService(new SessionRepositoryHibernate());
@@ -66,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
         Session session = sessionService.save(persistUser);
-        cookieService.setCookie("SESSION_ID", session.getId(),resp);
+        cookieUtil.setCookie("SESSION_ID", session.getId(),resp);
         resp.sendRedirect(req.getContextPath() + "/");
     }
 }

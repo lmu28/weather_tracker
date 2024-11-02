@@ -31,8 +31,10 @@ class UserServiceTestIT {
 
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();
+            throw e;
         }finally {
             entityManager.close();
+
         }
 
     }
@@ -74,6 +76,7 @@ class UserServiceTestIT {
 
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();
+            throw  e;
         }finally {
             entityManager.close();
             beforeAll();

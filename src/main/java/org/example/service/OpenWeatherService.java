@@ -6,9 +6,11 @@ import org.example.util.JsonParser;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 
@@ -57,7 +59,7 @@ public class OpenWeatherService {
         for (Map.Entry<String,String> p: params.entrySet()){
             sb.append(p.getKey());
             sb.append("=");
-            sb.append(p.getValue());
+            sb.append(URLEncoder.encode(p.getValue(), StandardCharsets.UTF_8));
             sb.append("&");
         }
         sb.deleteCharAt(sb.length() - 1);

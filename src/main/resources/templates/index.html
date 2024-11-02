@@ -29,24 +29,48 @@
 
 <div class="container mt-5">
     <h1>
-        Welcome to Weather Tracker<span th:if="${username != null}">, [[${username}]]</span>!
+        Welcome to Weather Tracker<span th:if="${user != null} and ${user.name != null}">, [[${user.name}]]</span>!
     </h1>
 
     <div th:if="${authentication == true}">
         <h2>Your Content</h2>
         <div>
-            <!-- Поле поиска -->
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search locations..." aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Search</button>
-                </div>
-            </div>
+
+            <form th:action="${applicationContext} + '/location'" method="GET" class="d-flex mb-3">
+                <input type="text" class="form-control" name = "locationName" placeholder="Search locations..." aria-label="Search"
+                       style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                <button type="submit" class="btn btn-outline-primary"
+                        style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Search</button>
+            </form>
+
 
             <!-- Список локаций -->
             <ul class="list-group">
-                <li class="list-group-item" th:each="location : ${locations}" th:text="${location.name}">Location Name</li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" th:each="location : ${locations}">
+                    <div>
+                        <span th:text="${location.name}">Location Name</span>
+                        <br/>
+                        <span style="color: gray;" th:text="${location.main.temp} + '°C'">Temperature</span>
+                    </div>
+<!--                    <a class="btn btn-danger btn-sm" th:href="${applicationContext +'/delete_location'}">Delete</a>-->
+
+<!--                    <button class="btn btn-danger btn-sm"-->
+<!--                            th:href="@{${applicationContext}/delete_location(userId=${user.id}, locationId=1)}">-->
+<!--                        Delete-->
+<!--                    </button>-->
+
+
+                    <form th:action="${applicationContext} + '/location'" method="post" style="display: inline;">
+                        <input type="hidden" name="_method" value="DELETE" />
+<!--                        <input type="hidden" name="locationId" th:value="${location.id}" />-->
+                        <input type="hidden" name="locationName" th:value="${location.name}" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+
+                </li>
             </ul>
+
+
         </div>
     </div>
 

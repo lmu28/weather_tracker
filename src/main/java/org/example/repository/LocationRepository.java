@@ -1,13 +1,18 @@
 package org.example.repository;
 
 import org.example.model.Location;
-import org.example.model.User;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface LocationRepository {
 
 //    int deleteByUser(User user);
+
+    void save(Location location);
+
+    Optional<Location> findByName(String name);
+
+    void remove(Location location);
 
 
 }

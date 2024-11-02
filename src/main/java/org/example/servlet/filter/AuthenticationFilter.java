@@ -8,9 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.model.Session;
 import org.example.repository.SessionRepositoryHibernate;
-import org.example.service.CookieService;
+import org.example.util.CookieUtil;
 import org.example.service.SessionService;
-import org.example.service.UserService;
 
 import java.io.IOException;
 
@@ -20,7 +19,8 @@ public class AuthenticationFilter implements Filter {
     public static final String SESSION_ID = "SESSION_ID";
     public static final String AUTHENTICATION = "authentication";
     public static final String SESSION = "session";
-    private final CookieService cookieService = new CookieService();
+    public static final String USER = "user";
+    private final CookieUtil cookieUtil = new CookieUtil();
     private final SessionService sessionService = new SessionService(new SessionRepositoryHibernate());
 
 
@@ -29,7 +29,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
-        Cookie cookie = cookieService.getCookie(SESSION_ID, httpRequest);
+        Cookie cookie = cookieUtil.getCookie(SESSION_ID, httpRequest);
 
         httpRequest.setAttribute(AUTHENTICATION, false);
         if (cookie != null){
@@ -37,13 +37,15 @@ public class AuthenticationFilter implements Filter {
             if (sessionService.isValid(session)){
                 httpRequest.setAttribute(SESSION, session);
                 httpRequest.setAttribute(AUTHENTICATION, true);
-                httpRequest.setAttribute("username", session.getUser().getName());
+                httpRequest.setAttribute(USER, session.getUser());
             }else {
-                cookieService.deleteCookie(cookie.getName(),httpResponse);
+                cookieUtil.deleteCookie(cookie.getName(),httpResponse);
             }
         }
 
 
         filterChain.doFilter(servletRequest,servletResponse);
+
+
     }
 }

@@ -41,6 +41,7 @@ class SessionServiceTestIT {
 
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
+            throw e;
         } finally {
             entityManager.close();
         }
@@ -88,6 +89,7 @@ class SessionServiceTestIT {
 
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
+            throw e;
         } finally {
             entityManager.close();
         }
@@ -111,6 +113,7 @@ class SessionServiceTestIT {
 
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
+            throw e;
         } finally {
             entityManager.close();
             beforeAll();
@@ -137,6 +140,7 @@ class SessionServiceTestIT {
             entityManager.getTransaction().rollback();
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
+            throw e;
         } finally {
             entityManager.close();
             beforeAll();
@@ -161,6 +165,7 @@ class SessionServiceTestIT {
             entityManager.getTransaction().rollback();
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
+            throw e;
         } finally {
             entityManager.close();
             beforeAll();

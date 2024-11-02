@@ -87,4 +87,23 @@ public class UserRepositoryHibernate implements UserRepository {
         }
 
     }
+
+
+    @Override
+    public User addLocationToUser(User user, Location location) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            user = entityManager.find(User.class, user.getId());
+            user.getLocations().add(location);
+            entityManager.getTransaction().commit();
+        }catch (RuntimeException e){
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            entityManager.close();
+        }
+        return user;
+
+    }
 }
